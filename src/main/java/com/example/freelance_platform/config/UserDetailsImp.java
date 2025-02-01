@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.security.access.method.P;
+//import org.springframework.security.access.method.P;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +40,10 @@ public class UserDetailsImp  implements UserDetails{
     public String getName()
     {
         return(user.getName());
+    }
+    public Long getId()
+    {
+         return(user.getId());
     }
     public  void setRole()
     {

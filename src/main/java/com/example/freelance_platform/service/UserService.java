@@ -3,11 +3,19 @@ package com.example.freelance_platform.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.freelance_platform.config.UserDetailsImp;
 import com.example.freelance_platform.dto.UserDTO;
+import com.example.freelance_platform.dto.UserLoginDTO;
 import com.example.freelance_platform.models.RoleEnum;
 import com.example.freelance_platform.models.User;
 import com.example.freelance_platform.repository.UserRepository;
@@ -57,6 +65,48 @@ public class UserService {
         }
         return(1);
 
+    }
+    @Autowired
+    AuthenticationManager authManager;
+    @Autowired
+    JwtService jwtService;
+
+    public String loginUser(UserLoginDTO userLogin) throws Exception
+    {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(),userLogin.getPassword()));
+        
+        
+        if(authentication.isAuthenticated() == true)
+        {
+
+
+           
+          //Authentication a_uthentication = SecurityContextHolder.getContext().getAuthentication();
+          Object principal = authentication.getPrincipal();
+          System.out.println("Principal type: " + principal.getClass().getName());
+               User currentUser  = null;
+         if(principal instanceof UserDetailsImp)
+         {
+            UserDetailsImp userDetails = (UserDetailsImp)principal;
+            String username = userDetails.getUsername();
+            System.out.println(username);
+             currentUser = userRepository.findByEmail(username).get(); // findByEmail returns type Optional
+            
+         }
+         else
+         {
+            System.out.println("No");
+         }
+
+         String token = jwtService.generateToken(currentUser);
+
+              return(token);
+        }
+        else
+        {
+            throw new Exception("Token is not authenticated");
+        }
+        
     }
     
 }
