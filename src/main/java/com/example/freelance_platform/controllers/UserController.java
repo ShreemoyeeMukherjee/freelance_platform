@@ -3,6 +3,7 @@ package com.example.freelance_platform.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,22 @@ public class UserController {
    
     public ResponseEntity<String> RegisterUser(@RequestBody  UserDTO userDTO, @RequestParam String role)
     {
+             try{
+                
+        System.out.println(userDTO);
         userService.CreateUser(userDTO, role);
         return(new ResponseEntity<>("User created ",HttpStatus.OK));
-    } 
+             }
+             catch( Exception e)
+             {
+                System.out.println("Error while creating user"+ e.getMessage());
+                return(new ResponseEntity<>("User not  created ",HttpStatus.BAD_REQUEST));
+             }
+    }
+    @GetMapping("/hello") 
+    public String hello()
+    {
+        return("Hello");
+    }
     
 }
