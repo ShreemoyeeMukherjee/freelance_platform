@@ -84,7 +84,7 @@
         <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
-    <version>3.2.2</version>  <!-- Update based on your Spring Boot version -->
+     <!-- Update based on your Spring Boot version -->
 </dependency>
 
         <dependency>
@@ -92,6 +92,9 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+    
+      
+      
     </dependencies>
 
     <build>

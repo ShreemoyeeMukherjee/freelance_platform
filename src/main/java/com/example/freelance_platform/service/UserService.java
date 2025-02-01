@@ -3,6 +3,7 @@ package com.example.freelance_platform.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,7 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     User user;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder encoder=  new BCryptPasswordEncoder(12);
     Long id = (long) 0 ;
 
     public int  CreateUser(   UserDTO user_info , String role)
@@ -38,7 +38,7 @@ public class UserService {
         user.setName(user_info.getName());
         user.setId(id);
         
-          String hashedPassword = passwordEncoder.encode(user_info.getPassword());
+          String hashedPassword = encoder.encode(user_info.getPassword());
         user.setPassword(hashedPassword);
         
         
