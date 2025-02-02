@@ -51,6 +51,9 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication);
         System.out.println("Principal in hello" + authentication.getPrincipal());
+        System.out.println( authentication.getAuthorities());
+        
+        
         return("Hello");
     }
     @Autowired

@@ -54,12 +54,12 @@ public class JwtFilter extends OncePerRequestFilter{
                         {
 
                             UserDetails userDetails = context.getBean(UserDetailsServiceImp.class).loadUserByUsername(username);
-                            System.out.println("Injwtfilter username  "+userDetails.getUsername());
+                            //System.out.println("Injwtfilter username  "+userDetails.getUsername());
                             if(jwtService.validateToken(token, userDetails) == true)
                             {
                                 System.out.println("Jwt is verified");
                                 UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                               System.out.println("Authtoken "+authtoken);
+                               //System.out.println("Authtoken "+authtoken);
                                 authtoken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                                 SecurityContextHolder.getContext().setAuthentication(authtoken);
                             }

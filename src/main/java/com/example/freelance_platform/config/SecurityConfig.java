@@ -28,7 +28,9 @@ public class SecurityConfig {
        return http.authorizeHttpRequests(request->request
         .requestMatchers("/api/user/register","/db-console/**","/","/api/user/login").permitAll()
 
-        .requestMatchers("/api/user/hello").authenticated())
+        
+        .requestMatchers("/api/user/hello").hasAuthority("CLIENT")
+        .anyRequest().authenticated())
        
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
