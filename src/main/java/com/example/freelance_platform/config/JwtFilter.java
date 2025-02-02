@@ -60,6 +60,7 @@ public class JwtFilter extends OncePerRequestFilter{
                                 System.out.println("Jwt is verified");
                                 UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                                //System.out.println("Authtoken "+authtoken);
+                               System.out.println(userDetails.getAuthorities());
                                 authtoken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                                 SecurityContextHolder.getContext().setAuthentication(authtoken);
                             }

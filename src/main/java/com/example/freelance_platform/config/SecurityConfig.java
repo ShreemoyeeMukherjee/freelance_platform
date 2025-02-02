@@ -29,7 +29,7 @@ public class SecurityConfig {
         .requestMatchers("/api/user/register","/db-console/**","/","/api/user/login").permitAll()
 
         
-        .requestMatchers("/api/user/hello").hasAuthority("CLIENT")
+        .requestMatchers("/api/user/hello","/api/client/**").hasAuthority("CLIENT")
         .anyRequest().authenticated())
        
         .csrf(AbstractHttpConfigurer::disable)
