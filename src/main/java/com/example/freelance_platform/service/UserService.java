@@ -83,7 +83,7 @@ public class UserService {
            
           //Authentication a_uthentication = SecurityContextHolder.getContext().getAuthentication();
           Object principal = authentication.getPrincipal();
-          System.out.println("Principal type: " + principal.getClass().getName());
+          //System.out.println("Principal type: " + principal.getClass().getName());
                User currentUser  = null;
          if(principal instanceof UserDetailsImp)
          {

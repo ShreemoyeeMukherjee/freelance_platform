@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.example.freelance_platform.config.UserDetailsServiceImp;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.example.freelance_platform.config.UserDetailsImp;
 @Component
 public class JwtFilter extends OncePerRequestFilter{
 
