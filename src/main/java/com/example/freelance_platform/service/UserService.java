@@ -99,8 +99,9 @@ public class UserService {
          }
 
          String token = jwtService.generateToken(currentUser);
-
-              return(token);
+         System.out.println(token);
+         return(token);
+       
         }
         else
         {

@@ -56,8 +56,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginDTO userLogin) throws Exception
     {
-        String ans = userService.loginUser(userLogin);
-        return(new ResponseEntity<>("Token created"+ans,HttpStatus.OK));
+        String token = userService.loginUser(userLogin);
+        return(new ResponseEntity<>("Token created    "+token,HttpStatus.OK));
+        
     }
     
 }
