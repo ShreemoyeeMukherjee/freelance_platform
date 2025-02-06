@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.freelance_platform.dto.TaskDTO;
 import com.example.freelance_platform.models.Task;
@@ -28,6 +29,7 @@ public class TaskController {
     public ResponseEntity<String> createTask(@RequestBody TaskDTO taskDTO)
 
     {
+        System.out.println("helllloooooo");
         System.out.println(taskDTO.getName());
         boolean  flag = taskService.createTask(taskDTO);
         if(flag)
@@ -85,6 +87,28 @@ public class TaskController {
         }
 
     }
+    @PostMapping("/upload-task-description")
+    public ResponseEntity<String> uploadTaskDescription(@RequestParam Long taskid,@RequestParam(name= "task_desc") MultipartFile file )
+    {
+        boolean flag = false;
+        try
+        {
+            flag = taskService.uploadFile(taskid, file);
+            if(flag == true)
+            {
+                return(new ResponseEntity<>("Task description upload successful",HttpStatus.OK));
+            }
+            else
+            {
+                return(new ResponseEntity<>("Task description upload failed",HttpStatus.INTERNAL_SERVER_ERROR));
+            }
+        }
+        catch(Exception e)
+        {
+          return(new ResponseEntity<>("Task description upload failed",HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
     
     
     

@@ -19,6 +19,9 @@ import com.example.freelance_platform.dto.UserLoginDTO;
 import com.example.freelance_platform.repository.UserRepository;
 import com.example.freelance_platform.service.UserService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/api/user")
 
@@ -61,11 +64,16 @@ public class UserController {
     @Autowired
     AuthenticationManager authManager;
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginDTO userLogin) throws Exception
+    public ResponseEntity<String> login(@RequestBody UserLoginDTO userLogin,HttpServletResponse response) throws Exception
     {
         
         String token = userService.loginUser(userLogin);
-        return(new ResponseEntity<>("Token created    "+token,HttpStatus.OK));
+        
+        
+    
+        
+       
+        return(new ResponseEntity<>(token,HttpStatus.OK));
         
     }
     

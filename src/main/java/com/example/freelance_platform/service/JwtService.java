@@ -40,11 +40,12 @@ public class JwtService {
     //         throw new RuntimeErrorException(null, "Algorithm not found");
     //     }
         
-    // }
+    // 
 
     public String generateToken(User currentUser)
     {
 
+        System.out.println(currentUser.getTaskList());
         Map<String ,Object> claimMap = new HashMap<>();
         claimMap.put("currentUser",currentUser);
         
@@ -58,18 +59,18 @@ public class JwtService {
 
 
 
-        //SecretKey secretKey = Jwts.SIG.HS256.key().build();
+        SecretKey secretKey = Jwts.SIG.HS256.key().build();
         String token = Jwts.builder()
                 
         .subject(currentUser.getEmail())
               .issuedAt(today)
               .expiration(expirationDate)
               
-               .claims(claimMap)
+            //    .claims(claimMap)
                .signWith(getKey())
                .compact();
         return(token);
-
+// 
     }
     public  SecretKey getKey()
     {

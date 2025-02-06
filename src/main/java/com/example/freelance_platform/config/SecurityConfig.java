@@ -25,13 +25,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
-       return http.authorizeHttpRequests(request->request
+       return http
+       .cors(Customizer.withDefaults())  // 🔹 Enable CORS in Spring Security
+            .csrf(AbstractHttpConfigurer::disable)
+       .authorizeHttpRequests(request->request
         .requestMatchers("/api/user/register","/db-console/**","/","/api/user/login").permitAll()
 
-        
+       
         .requestMatchers("/api/user/hello","/api/client/**").hasAuthority("CLIENT")
         .anyRequest().authenticated())
-       
+        
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults())
         .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

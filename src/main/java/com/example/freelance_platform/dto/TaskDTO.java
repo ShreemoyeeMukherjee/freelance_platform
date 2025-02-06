@@ -13,6 +13,7 @@ public class TaskDTO {
     private String description;
     private Long  duration_in_hrs;
     private Double remuneration;
+    private Long id;
 
     
 }

@@ -1,14 +1,20 @@
 package com.example.freelance_platform.service;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.freelance_platform.dto.TaskDTO;
 import com.example.freelance_platform.models.Task;
@@ -86,10 +92,13 @@ public class TaskService {
         for(Task task:taskList)
         {
             TaskDTO taskDTO  = new TaskDTO();
+            //autowiring will not work , as it modifies the same object every time
+            // because here references to object are stored not the complete object 
             taskDTO.setDescription(task.getDescription());
             taskDTO.setDuration_in_hrs(task.getDuration_in_hrs());
             taskDTO.setName(task.getName());
             taskDTO.setRemuneration(task.getRemuneration());
+            taskDTO.setId(task.getId());
            
             taskDTOList.add(taskDTO);
         }
@@ -144,6 +153,37 @@ public class TaskService {
     return false;
 
 }
+
+    @Value("${filePath}")
+    private String basePath;
+    public boolean uploadFile(Long taskid, MultipartFile file)
+
+    {
+        String filename= "task_desc"+Long.toString(taskid);
+        File dir = new File(basePath+filename);
+        // even if dir exists , the new file will overwrite the old one
+        System.out.println(basePath);
+        Path path=  Path.of(basePath+filename);
+        System.out.println(path);
+       
+        
+
+        
+        try{
+               Files.copy(file.getInputStream(),path,StandardCopyOption.REPLACE_EXISTING);
+               Task task_whose_jd_is_to_be_uploaded = taskRepository.findById(taskid).get();
+               task_whose_jd_is_to_be_uploaded.setTask_document_link(path.toString());
+               taskRepository.save(task_whose_jd_is_to_be_uploaded);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+
+        }
+        return true;
+
+    }
+
+   
     
 }
 
