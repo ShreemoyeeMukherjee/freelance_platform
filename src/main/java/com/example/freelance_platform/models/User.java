@@ -28,7 +28,7 @@ import com.example.freelance_platform.models.RoleEnum;
 public class User {
 
    @Id
-   //@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq")   
+   @GeneratedValue(strategy=GenerationType.IDENTITY)   
     private Long id;
     private String name;
     private String email;

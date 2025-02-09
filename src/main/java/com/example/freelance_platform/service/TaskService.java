@@ -46,8 +46,8 @@ public class TaskService {
 
     @Autowired
     TaskRepository taskRepository;
-    @Autowired
-    Task task;
+    // @Autowired
+    // Task task;
     @Autowired
     UserRepository userRepository;
     // @Autowired
@@ -55,7 +55,7 @@ public class TaskService {
     public boolean createTask(TaskDTO taskbody)
     {
         try{
-        
+              Task task = new Task();
              task.setName(taskbody.getName());
              task.setDescription(taskbody.getDescription());
              task.setDuration_in_hrs(taskbody.getDuration_in_hrs());
@@ -161,7 +161,7 @@ public class TaskService {
     {
         String filename= "task_desc"+Long.toString(taskid);
         File dir = new File(basePath+filename);
-        // even if dir exists , the new file will overwrite the old one
+        // even if dir exists , the new file will overwrite the old one,dir is file object
         System.out.println(basePath);
         Path path=  Path.of(basePath+filename);
         System.out.println(path);

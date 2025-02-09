@@ -24,15 +24,15 @@ import com.example.freelance_platform.repository.UserRepository;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    User user;
+    // @Autowired
+    // User user;
     private BCryptPasswordEncoder encoder=  new BCryptPasswordEncoder(12);
-    Long id = (long) 0 ;
+    
 
     public int  CreateUser(   UserDTO user_info , String role)
     {
        try{
-        id++;
+        User user = new User();
          String user_provided_email = user_info.getEmail();
          Optional<User>user_with_this_email = userRepository.findByEmail(user_provided_email);
          
@@ -44,7 +44,7 @@ public class UserService {
             throw new Error("Email already exists");
          }
         user.setName(user_info.getName());
-        user.setId(id);
+        
         
           String hashedPassword = encoder.encode(user_info.getPassword());
         user.setPassword(hashedPassword);
